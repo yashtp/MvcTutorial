@@ -1,0 +1,74 @@
+﻿@using Employee = Helper.Employee
+@model IEnumerable<Employee>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Employee List";
+}
+<style>
+    li:hover {
+        background: red;
+    }
+
+    ul {
+        text-decoration: none;
+    }
+
+    li {
+        margin: 10px;
+        text-decoration: none;
+        background: greenyellow;
+        width: max-content;
+    }
+    td {
+        margin:5px;
+        padding:5px;
+        text-decoration: none;
+    }
+</style>
+<div style="font-family: arial">
+    <h2>Employee List</h2>
+    <p>@Html.ActionLink("Create New", "Create")</p>
+
+    @*<ul>
+            @foreach (Employee emp in @Model)
+            {
+                <li>
+                    @Html.ActionLink(emp.Name, "Details", new { id = emp.EmployeeId })
+                </li>
+            }
+
+        </ul>*@
+
+    <table border="1">
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.EmployeeId)</th>
+            <th>@Html.DisplayNameFor(m => m.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.Gender)</th>
+            <th>@Html.DisplayNameFor(m => m.City)</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var emp in @Model)
+        {
+            using(@Html.BeginForm("Delete", "Employee", new { id = emp.EmployeeId }))
+            {
+                <tr>
+
+                    <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
+                    <td>@Html.DisplayFor(x => emp.Name)</td>
+                    <td>@Html.DisplayFor(x => emp.Gender)</td>
+                    <td>@Html.DisplayFor(x => emp.City)</td>
+
+                    <td>
+                        @Html.ActionLink("edit", "Edit", new { id = emp.EmployeeId }) |
+                        @Html.ActionLink("details", "Details", new { id = emp.EmployeeId }) |
+                        <input type="submit" onclick="return confirm('Are you sure you want to delete @emp.Name');" value="Delete" />
+
+                    </td>
+
+                </tr>
+            }
+        }
+    </table>
+    @Html.ActionLink("Back to Departments", "Index", "Department")
+</div>
